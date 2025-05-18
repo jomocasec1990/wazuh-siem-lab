@@ -74,7 +74,7 @@ tail -f /var/ossec/logs/alerts/alerts.json | grep fimtestfile
 
 ### 🖼 Screenshot
 
-![Linux FIM - Uchiha](images/wazuh-Uchiha.png)
+![Linux FIM - Uchiha](screenshots/wazuh-Uchiha.png)
 
 ---
 
@@ -109,7 +109,7 @@ echo "FIM Windows Test" > C:\fim-test\fimtestfile.txt
 
 ### 🖼 Screenshot
 
-![Windows FIM - Konoha](images/wazuh-Konoha.png)
+![Windows FIM - Konoha](screenshots/wazuh-Konoha.png)
 
 ---
 
