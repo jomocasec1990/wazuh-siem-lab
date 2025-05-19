@@ -135,7 +135,7 @@ Before exporting or sharing this dashboard, ensure:
 ## 📸 Screenshots
 
 
-![Dashboard-Capture](screenshots/wazuh-dashboard.png)
+![Dashboard-Capture](Screenshots/wazuh-dashboard.png)
 
 ---
 With this, your dashboard is fully documented, visualized, saved, and ready to share across environments 🚀
