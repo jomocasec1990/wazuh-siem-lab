@@ -5,48 +5,18 @@ This dashboard is designed to visualize executed commands on Linux systems using
 ## ⬇️ NDJSON Export
 You’ll find the file `linux-audit-wazuh-dashboard.ndjson` in this repo.
 
-To export it manually:
-1. Go to **Stack Management > Saved Objects**
-2. Click **Export**
-3. Select the visualization and dashboard
-4. Download `linux-audit-wazuh-dashboard.ndjson`
-
-To import it elsewhere, use the same menu via **Saved Objects > Import**.
+To import it manually:
+1. Download `linux-audit-wazuh-dashboard.ndjson`
+2. Go to **Dashboard Management > Saved Objects**
+3. Click **Import**
+4. Select the downloaded dashboard
+5. You can name "Linux Audit - Command Execution (audit-wazuh-c)"
+6. Click Import**.
+7. You can name "Linux Audit - Command Execution (audit-wazuh-c)"
 
 📁 File location: [`linux-audit-wazuh-dashboard.ndjson`](Download/linux-audit-wazuh-dashboard.ndjson)
 
 ## 📈 Included Visualizations
-
-### 1. Command Execution per Hour (Bar Chart)
-- **Type**: Vertical Bar
-- **X-Axis**: `@timestamp` (grouped by hour)
-- **Y-Axis**: Count
-- **Global filter**: `data.audit.key:"audit-wazuh-c"`
-
-### 2. Executed Commands Table
-- **Type**: Data Table
-- **Buckets**:
-  - Split rows → `data.audit.exe`
-  - Split rows → `data.audit.euid` (optional)
-- **Fields displayed**:
-  - `agent.name`
-  - `data.audit.command`
-  - `data.audit.exe`
-  - `data.audit.cwd`
-  - `data.audit.key`
-  - `user.name`
-  - `data.audit.tty`
-
-## ✅ Requirements Met
-Before exporting or sharing this dashboard, ensure:
-- You're using the index pattern: `wazuh-alerts-*`
-- Logs contain the following fields:
-  - `data.audit.command`
-  - `data.audit.exe`
-  - `data.audit.cwd`
-  - `data.audit.key`
-  - `user.name`
-- The key `data.audit.key = "audit-wazuh-c"` is properly indexed
 
 ---
 
@@ -58,16 +28,15 @@ Before exporting or sharing this dashboard, ensure:
 5. Add Bucket:
    - Split rows > `data.audit.exe`
    - Aggregation: Terms, Order: Descending by Count, Size: 10+
-6. (Optional) Add another bucket: `data.audit.euid` or `user.name`
-7. Click Apply (check or curved arrow)
-8. Save as: **Auditd - Most Executed Commands by User**
+6. (Optional) Add another bucket: `data.audit.euid`
+7. Save as: **Auditd - Most Executed Commands by User**
 
 ## 🔄 Add Visualization to Dashboard
 1. Make sure it's saved
 2. Go to your dashboard
 3. Click **Edit > + Add**
 4. Find the visualization by name
-5. Click **Add**, adjust size if needed
+5. Click **Add**
 6. Click **Save**
 
 ## 📅 Suggested Dashboard Metadata
@@ -75,10 +44,6 @@ Before exporting or sharing this dashboard, ensure:
 - **Description**:
   > Displays the most frequently executed commands captured via auditd for events matching the key `"audit-wazuh-c"`. Useful for monitoring user activity and detecting abnormal usage patterns.
 
-## ⚠️ If Your Visualization Is Missing
-- Make sure it's saved
-- Make sure index pattern matches
-- Go to `Visualize > Library` to confirm it’s there
 
 ---
 
