@@ -13,7 +13,7 @@ To export it manually:
 
 To import it elsewhere, use the same menu via **Saved Objects > Import**.
 
-📁 File location: [`linux-audit-wazuh-dashboard.ndjson`](Dashboard-Download/linux-audit-wazuh-dashboard.ndjson)
+📁 File location: [`linux-audit-wazuh-dashboard.ndjson`](Download/linux-audit-wazuh-dashboard.ndjson)
 
 ## 📈 Included Visualizations
 
