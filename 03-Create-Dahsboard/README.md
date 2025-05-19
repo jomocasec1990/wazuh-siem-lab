@@ -132,7 +132,7 @@ Before exporting or sharing this dashboard, ensure:
 
 ---
 
-## 📸 Screenshots
+## 📸 Screenshot
 
 
 ![Dashboard-Capture](Screenshots/wazuh-dashboard.png)
