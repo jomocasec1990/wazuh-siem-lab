@@ -110,23 +110,6 @@ Defender should generate a **Severe** event with signature: `Virus:DOS/EICAR_Tes
 - Defender must be active to generate real alerts.
 - Useful for building correlation rules, response automation, or SIEM dashboards.
 
----
 
-## 📂 Files in this folder
-
-| File                   | Description                       |
-|------------------------|-----------------------------------|
-| `wazuh-01-malware.png` | Screenshot from Event Viewer      |
-| `wazuh-02-malware.png` | Screenshot from Kibana/Wazuh      |
-
----
-
-## 🔜 Next Steps
-
-- Create a Wazuh rule to tag Defender alerts with custom metadata.
-- Trigger active response based on alert severity.
-- Integrate with TheHive for automatic case creation.
-
----
 
 > Lab conducted by [@jomocasec1990](https://github.com/jomocasec1990) — SOC Analyst Lab Series 🚨🛡️
