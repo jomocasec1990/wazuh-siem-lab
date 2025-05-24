@@ -112,4 +112,3 @@ Defender should generate a **Severe** event with signature: `Virus:DOS/EICAR_Tes
 
 
 
-> Lab conducted by [@jomocasec1990](https://github.com/jomocasec1990) — SOC Analyst Lab Series 🚨🛡️
