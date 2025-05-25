@@ -1,136 +1,119 @@
-# 🔐 Wazuh File Integrity Monitoring Lab (Linux & Windows)
+# Windows File Integrity Monitoring (FIM) Lab with Wazuh
 
-This lab demonstrates how to configure and validate **File Integrity Monitoring (FIM)** using **Wazuh** in both **Linux** and **Windows environments**, covering both centralized and local configurations.
-
----
-
-## 🏗 Lab Architecture
-
-| Hostname   | Role               | IP Address | OS / Platform       |
-| ---------- | ------------------ | ---------- | ------------------- |
-| Kumogakure | Wazuh Manager      | 10.1.3.11  | Ubuntu 20.04 LTS    |
-| Uchiha     | Linux Agent        | 10.1.2.11  | Ubuntu 20.04 LTS    |
-| Konoha     | Windows Agent (AD) | 10.1.1.X   | Windows Server 2022 |
+This lab demonstrates how to set up and verify File Integrity Monitoring (FIM) on a **Windows 10** machine using the **Wazuh agent**. The lab includes configuration of real-time monitoring, validation in Wazuh dashboard, and the use of **Whodata** auditing for tracking user/process modifications.
 
 ---
 
-## ✅ Linux Agent (Uchiha) - Centralized FIM Configuration
+## 🖥️ 1. Create Test Directory
 
-### 🔧 Configuration on Wazuh Manager
+Open PowerShell as Administrator and run:
 
-File: `/var/ossec/etc/shared/default/agent.conf`
+```powershell
+mkdir C:\Windows\System32\FIM-TEST
+```
+
+---
+
+## ⚙️ 2. Configure Wazuh Agent
+
+Edit the Wazuh agent configuration:
+
+```
+C:\Program Files (x86)\ossec-agent\ossec.conf
+```
+
+Add or modify the `<syscheck>` section as follows:
 
 ```xml
-<agent_config os="linux">
-  <syscheck>
-    <directories check_all="no" check_sum="yes">/root/fim-test</directories>
-  </syscheck>
-</agent_config>
+<syscheck>
+  <disabled>no</disabled>
+  <frequency>43200</frequency>
+  <scan_on_start>yes</scan_on_start>
+  <directories check_all="yes" report_changes="yes" realtime="yes">C:\Windows\System32\FIM-TEST</directories>
+</syscheck>
 ```
 
-### 📊 Validation Process
+Then restart the agent:
 
-1. Restart syscheck for the Linux agent (ID: 004):
-
-```bash
-sudo /var/ossec/bin/agent_control -r -u 004
+```powershell
+Restart-Service WazuhSvc
 ```
 
-2. Create or modify a file to trigger FIM:
+---
 
-```bash
-sudo mkdir -p /root/fim-test
-echo "Test FIM Event $(date)" > /root/fim-test/fimtestfile.txt
+## 🧪 3. Create a File to Trigger Detection
+
+```powershell
+New-Item "C:\Windows\System32\FIM-TEST\test.txt" -ItemType File
 ```
 
-3. Confirm detection in Wazuh Manager:
+Go to the **Wazuh Dashboard → File Integrity Monitoring → Events**, filter by agent `Senju`, and validate that the event was captured.
 
-```bash
-tail -f /var/ossec/logs/alerts/alerts.json | grep fimtestfile
+Example event:
+
+```
+File: c:\windows\system32\fim-test\test.txt
+Event: added
+Mode: realtime
+SHA1, MD5, SHA256 calculated.
 ```
 
-### 🔍 Example Output:
+![FIM-Capture](Screenshots/wazuh-01-fim.png)
+---
+
+## 👤 4. Enable Whodata for Auditing
+
+Whodata functionality allows Wazuh to capture **who modified a file** and **which process** was responsible.
+
+Update `ossec.conf`:
+
+```xml
+<directories check_all="yes" report_changes="yes" whodata="yes">C:\Windows\System32\FIM-TEST</directories>
+```
+
+Restart the Wazuh agent again.
+
+Create a new file to test:
+
+```powershell
+New-Item "C:\Windows\System32\FIM-TEST\test2.txt" -ItemType File
+```
+
+Event example with `whodata`:
 
 ```json
-{
-  "rule": {
-    "id": "550",
-    "description": "Integrity checksum changed.",
-    "mitre": {
-      "id": ["T1565.001"],
-      "tactic": ["Impact"],
-      "technique": ["Stored Data Manipulation"]
-    }
-  },
-  "syscheck": {
-    "path": "/root/fim-test/fimtestfile.txt",
-    "md5_before": "...",
-    "md5_after": "...",
-    "event": "modified"
-  },
-  "location": "syscheck"
-}
+"mode": "whodata",
+"path": "c:\windows\system32\fim-test\test2.txt",
+"process": "explorer.exe",
+"event": "added"
 ```
 
-### 🖼 Screenshot
-
-![Linux FIM - Uchiha](screenshots/wazuh-Uchiha.png)
+🕵️ Shows that the file was created via Windows Explorer.
 
 ---
 
-## ✅ Windows Agent (Konoha - Active Directory) - Local FIM Configuration
-
-### 🔧 Configuration in `ossec.conf` (Local to Agent)
-
-```xml
-<ossec_config>
-  <syscheck>
-    <directories check_all="no" check_sum="yes" realtime="yes">C:\fim-test</directories>
-  </syscheck>
-</ossec_config>
-```
-
-### 📊 Validation Process
-
-1. Restart agent:
+## ✏️ 5. Modify File and Detect Changes
 
 ```powershell
-Stop-Service -Name "WazuhSvc"
-Start-Service -Name "WazuhSvc"
+Add-Content "C:\Windows\System32\FIM-TEST\test2.txt" -Value "Hello!"
 ```
 
-2. Create or edit test file:
+Check Wazuh dashboard again. You should see:
 
-```powershell
-echo "FIM Windows Test" > C:\fim-test\fimtestfile.txt
-```
-
-3. Check for alert in Wazuh Dashboard or verify via alerts.json on the manager.
-
-### 🖼 Screenshot
-
-![Windows FIM - Konoha](screenshots/wazuh-Konoha.png)
+- Event type: `modified`
+- Rule ID: `550`
+- Message: `Integrity checksum changed.`
+- Diff content included
 
 ---
 
-## 💡 Summary Table
+## ✅ Summary
 
-| Feature             | Linux Agent (Uchiha)            | Windows Agent (Konoha)       |
-| ------------------- | ------------------------------- | ---------------------------- |
-| Configuration Type  | Centralized (shared/agent.conf) | Local (agent ossec.conf)     |
-| Manual FIM Scan     | `agent_control -r -u 004`       | Restart WazuhSvc             |
-| Realtime Monitoring | Optional                        | Enabled via `realtime` attr. |
-| Visibility          | alerts.json / Dashboard         | Dashboard / alerts.json      |
-| Event Rule ID       | 550                             | 550                          |
-| MITRE Mapping       | T1565.001                       | T1565.001                    |
+This lab proves the following FIM capabilities on Windows:
 
----
+- Real-time file addition/modification detection
+- Full hash calculation (MD5, SHA1, SHA256)
+- `whodata` tracking for user/process responsible for changes
+- Log correlation and alerting in the Wazuh dashboard
 
-## 📚 References
-
-* [Wazuh File Integrity Monitoring](https://documentation.wazuh.com/current/user-manual/capabilities/file-integrity/index.html)
-* [Wazuh Agent Shared Config](https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/agent-config.html)
-* [Wazuh Ruleset - Rule 550](https://documentation.wazuh.com/current/user-manual/ruleset/rules.html#rule-550)
-
----
-
+> Created by [@jomocasec1990](https://github.com/jomocasec1990) — Windows FIM Lab 🚨
