@@ -58,7 +58,7 @@ Mode: realtime
 SHA1, MD5, SHA256 calculated.
 ```
 
-![FIM-Capture](screenshots/wazuh-01-fim.png)
+![FIM-Capture](Screenshots/wazuh-01-fim.png)
 ---
 
 ## 👤 4. Enable Whodata for Auditing
