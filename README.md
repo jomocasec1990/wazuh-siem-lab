@@ -1,72 +1,55 @@
-# 🛡️ Wazuh SIEM Lab — Security Monitoring & Threat Detection
+# 🧠 Wazuh SIEM Lab — Endpoint Telemetry, Threat Detection & Response Engineering
 
-This repository documents my personal lab project using **Wazuh** as a SIEM solution. The goal is to build and configure a complete environment for **security event monitoring, log analysis, and threat detection**.
+This repository showcases a structured, modular lab environment built on **Wazuh**, focused on simulating realistic enterprise monitoring, threat detection, and automated response use cases across Windows and Linux endpoints.
 
-This lab helps reinforce key concepts in cybersecurity operations, integrating Wazuh with Elastic Stack (ELK) and deploying agents for endpoint visibility.
+Rather than deploying a generic SIEM stack, this project is designed to **develop, test, and validate detection engineering techniques** using the native capabilities of Wazuh — including File Integrity Monitoring, Registry auditing, centralized agent management, malware behavior detection, custom rule sets, YARA scans, and Active Response.
 
----
-
-## 📌 Project Objectives
-
-- ✅ Install and configure Wazuh Server and Agents in a lab environment.
-- ✅ Integrate Wazuh with Elastic Stack (ELK) for log visualization and analysis.
-- ✅ Simulate common attack scenarios to generate security events.
-- ✅ Develop detection rules and analyze alerts using MITRE ATT&CK framework.
-- ✅ Practice incident triage and threat hunting techniques with Wazuh.
+The goal is not only to observe logs — but to **transform endpoint telemetry into actionable detection**, mimicking the workflows of real-world Security Operations Centers (SOCs).
 
 ---
 
-## 🛠️ Lab Environment
+## 🎯 What This Lab Covers
 
-| Component        | Details                                 |
-|------------------|-----------------------------------------|
-| **Wazuh Server** | Ubuntu-based server with Wazuh Manager  |
-| **Elastic Stack**| Elasticsearch, Logstash, Kibana         |
-| **Wazuh Agents** | Windows 10, Linux endpoints             |
-| **Other Tools**  | Filebeat, custom scripts for log testing|
-
----
-
-## 📝 Project Status
-
-- 🔵 **Phase 1: Environment Setup**  
-  Installing Wazuh Manager, Elastic Stack, and basic configuration.
-
-- ⚪ Phase 2: Agent Deployment and Data Collection  
-- ⚪ Phase 3: Detection Rules and Use Cases  
-- ⚪ Phase 4: Incident Analysis and Response  
-- ⚪ Phase 5: Automation and Advanced Use Cases
+- 🔍 Endpoint-focused detection: Windows Registry, processes, file hashes, behavior indicators.
+- ⚙️ Wazuh agent group management, remote configuration, rule inheritance and overrides.
+- 📦 Threat intelligence integrations: **VirusTotal**, **AbuseIPDB**, **CDB lists**, and **YARA rules**.
+- ⚔️ Simulation of malware techniques: Mirai, Xbash, LOLBins, USB abuse, and persistence.
+- 🧠 Custom rules tied to **MITRE ATT&CK** and mapped to real tactics and techniques.
+- 🚨 Active Response automation for malware containment and post-exploitation actions.
+- 📊 Log enrichment and event correlation across multiple systems and layers.
 
 ---
 
-## 📂 Repository Structure (to be updated)
+## 🔬 Why This Lab Exists
 
-```
-/wazuh-lab
-  ├── installation/
-  ├── configuration/
-  ├── detection-rules/
-  ├── simulated-attacks/
-  └── documentation/
-```
+Security tooling alone doesn't make a SOC effective. What matters is **how you tune detections, simulate threats, validate rules, and respond to alerts.**
+
+This lab is designed to:
+- Reproduce adversarial behavior in a controlled environment.
+- Create and test custom detections based on behavior, not just indicators.
+- Practice threat hunting with contextual telemetry and MITRE mappings.
+- Gain deep, practical familiarity with Wazuh’s detection and response stack.
+
+It’s an evolving project — each folder reflects a completed or in-progress capability, and will expand as more advanced topics (e.g., Sysmon, Yeti, Suricata, Zabbix) are added.
 
 ---
 
-## 🔗 References & Resources
+## 🗂️ Repository Layout
 
-- [Wazuh Documentation](https://documentation.wazuh.com/current/index.html)
-- [Elastic Stack Documentation](https://www.elastic.co/guide/index.html)
+| Folder              | Description |
+|---------------------|-------------|
+| `02-File-Integrity` | File monitoring rules and tuning on Windows |
+| `03-Create-Dashboard` | Dashboards, visualizations, Kibana-style views |
+| `04-Linux-Audit`    | Linux agent telemetry and audit rules |
+| `05-Defender`       | Defender integration and malware detection |
+| `06-CDB-Lab`        | Hash-based detection using CDB list matching |
+| *More directories coming soon...* |
+
+---
+
+## 🧠 Learn More
+
+- [Wazuh Official Documentation](https://documentation.wazuh.com/)
+- [Wazuh Ruleset Reference](https://documentation.wazuh.com/current/user-manual/ruleset/index.html)
 - [MITRE ATT&CK Framework](https://attack.mitre.org/)
-
----
-
-## 📈 Why this Project?
-
-As a network security engineer transitioning into cybersecurity, I am building this Wazuh SIEM lab to gain hands-on experience with **security event monitoring, log analysis, and incident response workflows**. This project complements my certifications and personal labs in threat detection and threat intelligence (ELK, TheHive, Cortex, MISP).
-
----
-
-## 👨‍💻 Author
-
-**Jordan Moran Cabello**  
-[LinkedIn](https://www.linkedin.com/in/tu-perfil/) | [GitHub](https://github.com/jomocasec1990)
+- [Wazuh GitHub Repository](https://github.com/wazuh/wazuh)
