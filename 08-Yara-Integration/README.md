@@ -160,8 +160,10 @@ full_log: wazuh-yara: INFO - Scan result: SUSP_Just_EICAR_RID2C24 c:\users\admin
 rule.id: 108001
 rule.description: File "c:\users\administrator\downloads\eicar\eicar.com" is a positive match. Yara rule: SUSP_Just_EICAR_RID2C24
 
-![Yara-Capture](Screenshots/wazuh-01-yara.png)
 ```
+
+![Yara-Capture](Screenshots/wazuh-01-yara.png)
+
 
 ## :bookmark_tabs: Summary
 This lab simulates a basic threat detection and response workflow using:
