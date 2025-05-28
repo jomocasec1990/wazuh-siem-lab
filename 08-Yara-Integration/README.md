@@ -162,7 +162,7 @@ rule.description: File "c:\users\administrator\downloads\eicar\eicar.com" is a p
 
 ```
 
-![Yara-Capture](Screenshots/wazuh-01-yara.png)
+![Yara-Capture](Screenshots/Wazuh-01-yara.png)
 
 
 ## :bookmark_tabs: Summary
