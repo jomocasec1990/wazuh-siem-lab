@@ -32,6 +32,7 @@ This lab demonstrates how to simulate and detect a **UAC Bypass (MITRE T1548.002
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/jomocasec1990/wazuh-siem-lab/main/09-Threat-Hunting-T1548/Rules/sysmonconfig-export.xml -OutFile C:\Users\Administrator\Downloads\Sysmon\sysmonconfig-export.xml
 .\Sysmon.exe -accepteula -i sysmonconfig-export.xml
 ```
+📌 The Sysmon configuration is tuned to log process creation, registry changes, and other key behaviors related to UAC bypass techniques.
 
 ### Wazuh Configuration
 
@@ -64,6 +65,7 @@ Invoke-AtomicTest T1548.002 -ShowDetailsBrief
 Invoke-AtomicTest T1548.002
 Invoke-AtomicTest T1548.002 -Cleanup
 ```
+🛠 This executes known UAC bypass methods to trigger relevant telemetry for detection testing.
 
 ---
 
@@ -71,16 +73,33 @@ Invoke-AtomicTest T1548.002 -Cleanup
 
 ### 🧠 Sysmon Log Sample
 
-![Sysmon Event Viewer](wazuh-01-attomic.png)
+![Sysmon Event Viewer](Screenshots/wazuh-01-attomic.png)
 
 ### 📈 Detection via Wazuh - MITRE Mapping
 
-![Wazuh MITRE Detection](wazuh-02-attomic.png)
+![Wazuh MITRE Detection](Screenshots/wazuh-02-attomic.png)
 
 ### 🧾 Raw JSON Log in Wazuh
 
-![Wazuh JSON Raw](wazuh-03-attomic.png)
-
+```yaml
+Agent Name:        Konoha
+Agent IP:          10.1.2.10
+Manager:           sunugakure
+Date (UTC):        2025-05-30 00:07:14
+Process:           powershell.exe
+User:              SECLABJMC\Administrator
+Event ID:          13 (Registry Value Set)
+Target Registry:   HKU\...\shell\open\command\DelegateExecute
+MITRE Techniques:  - T1548.002 (Bypass UAC)
+                   - T1112 (Modify Registry)
+Tactics:           - Privilege Escalation
+                   - Defense Evasion
+Alert Description:
+  "powershell.exe added a registry key used by auto-elevated processes, indicating a potential UAC bypass attempt"
+Rule Level:        12 (High)
+Wazuh Rule ID:     92306
+Sysmon Channel:    Microsoft-Windows-Sysmon/Operational
+```
 ---
 
 ## 🧠 MITRE Techniques Detected
@@ -88,16 +107,7 @@ Invoke-AtomicTest T1548.002 -Cleanup
 | Technique | Tactic |
 |----------|--------|
 | T1548.002 | Privilege Escalation, Defense Evasion |
-| T1112     | Modify Registry |
 
----
-
-## 🔁 Next Steps
-
-- Add detection for T1053 (Scheduled Tasks)
-- Include Sigma rules integration
-- Integrate TheHive or Cortex for incident response
-- Send alerts to Slack/Telegram using Wazuh integration
 
 ---
 
