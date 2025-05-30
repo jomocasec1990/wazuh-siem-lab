@@ -73,11 +73,11 @@ Invoke-AtomicTest T1548.002 -Cleanup
 
 ### 🧠 Sysmon Log Sample
 
-![Sysmon Event Viewer](Screenshots/wazuh-01-attomic.png)
+![Sysmon Event Viewer](Screenshots/wazuh-02-attomic.png)
 
 ### 📈 Detection via Wazuh - MITRE Mapping
 
-![Wazuh MITRE Detection](Screenshots/wazuh-02-attomic.png)
+![Wazuh MITRE Detection](Screenshots/wazuh-01-attomic.png)
 
 ### 🧾 Raw JSON Log in Wazuh
 
