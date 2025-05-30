@@ -29,7 +29,7 @@ This lab demonstrates how to simulate and detect a **UAC Bypass (MITRE T1548.002
 ### Sysmon Deployment
 
 ```powershell
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/Mazuco/wazuh/refs/heads/main/sysmonconfig-export.xml -OutFile C:\Sysmon\sysmonconfig-export.xml
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/jomocasec1990/wazuh-siem-lab/main/09-Threat-Hunting-T1548/Rules/sysmonconfig-export.xml -OutFile C:\Users\Administrator\Downloads\Sysmon\sysmonconfig-export.xml
 .\Sysmon.exe -accepteula -i sysmonconfig-export.xml
 ```
 
@@ -47,7 +47,7 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/Mazuco/wazuh/refs/heads
 **Download Rules:**
 
 ```bash
-curl -O https://raw.githubusercontent.com/Mazuco/wazuh/refs/heads/main/rules_sysmon.xml -o /var/ossec/ruleset/rules/0999-sysmon_rules.xml
+curl -O  https://raw.githubusercontent.com/jomocasec1990/wazuh-siem-lab/main/09-Threat-Hunting-T1548/Rules/0999-sysmon_rules.xml -o /var/ossec/ruleset/rules/0999-sysmon_rules.xml
 chmod 650 /var/ossec/ruleset/rules/0999-sysmon_rules.xml
 systemctl restart wazuh-manager
 ```
