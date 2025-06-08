@@ -85,7 +85,7 @@ Apply permissions:
 
 ```bash
 # Download
-wget https://raw.githubusercontent.com/
+wget https://raw.githubusercontent.com/jomocasec1990/wazuh-siem-lab/main/10-AbuseIPDB-Wazuh-ActiveResponse/AbuseIPDB-Script/custom-abuseipdb.py
 
 # Set permissions
 chmod 750 /var/ossec/integrations/custom-abuseipdb.py
